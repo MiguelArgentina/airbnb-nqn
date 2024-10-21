@@ -23,17 +23,17 @@ const EditTransactionPage = () => {
         const hasArsValue = arsIncome > 0 || arsExpense > 0;
 
         if (hasUsdValue && hasArsValue) {
-            setErrorMessage("You can only add one value in either USD or ARS.");
+            setErrorMessage("En una transacción sólo puede cargar o USD o ARS.");
             return false;
         }
 
         if (hasUsdValue && exchangeRate === 0) {
-            setErrorMessage("Exchange rate is required when a USD value is added.");
+            setErrorMessage("Debe ingresar un TC al cargar USD.");
             return false;
         }
 
         if (hasArsValue && exchangeRate !== 0) {
-            setErrorMessage("Exchange rate must be empty when an ARS value is added.");
+            setErrorMessage("El TC debe ser 0 al cargar ARS.");
             return false;
         }
 
@@ -55,7 +55,7 @@ const EditTransactionPage = () => {
                 setDescription(data.description);
                 setExchangeRate(data.exchangeRate);
             } else {
-                console.log("No such document!");
+                console.log("No existe esa transacción!");
             }
         };
         fetchTransaction();
@@ -76,11 +76,11 @@ const EditTransactionPage = () => {
                 description,
                 exchangeRate,
             });
-            setMessage("Transaction updated successfully!");
+            setMessage("Transacción actualizada correctamente!");
             setMessageType("success");
         } catch (error) {
-            console.error("Error updating transaction: ", error);
-            setMessage("Error updating transaction. Please try again.");
+            console.error("Error actualizando transacción: ", error);
+            setMessage("Error actualizando transacción. Intente nuevamente.");
             setMessageType("error");
         }
     };
@@ -92,7 +92,7 @@ const EditTransactionPage = () => {
 
     return (
         <div className="p-6 bg-white rounded-lg shadow-md mt-4">
-            <h2 className="text-xl text-gray-900 font-semibold mb-4">Edit Transaction</h2>
+            <h2 className="text-xl text-gray-900 font-semibold mb-4">Editar Transacción</h2>
 
             {errorMessage && (
                 <div className="p-2 mb-4 text-white rounded bg-red-500">
@@ -122,7 +122,7 @@ const EditTransactionPage = () => {
                 handleUpdate();
             }} className="flex flex-col gap-4">
                 <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">Fecha</label>
                     <input
                         type="date"
                         id="date"
@@ -133,7 +133,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="usdIncome" className="block text-sm font-medium text-gray-700">USD Income</label>
+                    <label htmlFor="usdIncome" className="block text-sm font-medium text-gray-700">Ingreso USD</label>
                     <input
                         type="number"
                         min="0"
@@ -144,7 +144,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="arsIncome" className="block text-sm font-medium text-gray-700">ARS Income</label>
+                    <label htmlFor="arsIncome" className="block text-sm font-medium text-gray-700">Ingreso ARS</label>
                     <input
                         type="number"
                         min="0"
@@ -155,7 +155,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="usdExpense" className="block text-sm font-medium text-gray-700">USD Expense</label>
+                    <label htmlFor="usdExpense" className="block text-sm font-medium text-gray-700">Gasto USD</label>
                     <input
                         type="number"
                         min="0"
@@ -166,7 +166,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="arsExpense" className="block text-sm font-medium text-gray-700">ARS Expense</label>
+                    <label htmlFor="arsExpense" className="block text-sm font-medium text-gray-700">Gasto ARS</label>
                     <input
                         type="number"
                         min="0"
@@ -177,8 +177,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="exchangeRate" className="block text-sm font-medium text-gray-700">Exchange Rate (USD
-                        to ARS)</label>
+                    <label htmlFor="exchangeRate" className="block text-sm font-medium text-gray-700">TC (ARS/USD)</label>
                     <input
                         type="number"
                         min="0"
@@ -190,7 +189,7 @@ const EditTransactionPage = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción</label>
                     <textarea
                         type="text"
                         id="description"
@@ -203,7 +202,7 @@ const EditTransactionPage = () => {
                     type="submit"
                     className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
                 >
-                    Update Transaction
+                    Actualizar
                 </button>
             </form>
 
@@ -212,7 +211,7 @@ const EditTransactionPage = () => {
                 onClick={() => navigate("/")} // Navigate to the root page
                 className="mt-4 w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
             >
-                Back to Transactions
+                Volver al listado
             </button>
         </div>
     );

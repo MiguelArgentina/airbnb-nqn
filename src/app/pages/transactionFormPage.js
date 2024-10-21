@@ -11,7 +11,7 @@ export default function TransactionFormPage() {
         <div>
             <button className={"w-25 m-5 bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 transition"}
                     onClick={() => navigate("/")}>
-                Back to Transaction List
+                Volver al listado
             </button>
             <TransactionForm />
         </div>

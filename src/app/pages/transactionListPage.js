@@ -51,11 +51,11 @@ export default function TransactionListPage() {
                         className="w-25 bg-blue-500 text-white rounded-full py-2 px-4 hover:bg-blue-600 transition flex items-center gap-2"
                         onClick={() => navigate("/transactionFormPage")}
                     >
-                        <AddIcon /> Add Transaction
+                        <AddIcon /> Agregar
                     </button>
                     <Link to="/income-summary">
                         <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 flex items-center gap-2">
-                            <ReportIcon /> View Income Summary
+                            <ReportIcon /> Ver resumen de ganancias
                         </button>
                     </Link>
                 </div>
@@ -65,7 +65,7 @@ export default function TransactionListPage() {
                         className="bg-red-500 text-white py-2 px-4 rounded-full hover:bg-red-600 transition flex items-center gap-2"
                         onClick={handleLogout}
                     >
-                        <LogoutIcon /> Logout
+                        <LogoutIcon /> Desconectar
                     </button>
                 )}
             </div>

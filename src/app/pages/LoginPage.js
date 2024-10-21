@@ -21,7 +21,7 @@ const LoginPage = () => {
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <h1 className="text-3xl font-bold mb-8">Login to access the app</h1>
+            <h1 className="text-3xl font-bold mb-8">Inicie sesión para tener acceso a la app</h1>
             <button onClick={handleLogin} className="focus:outline-none">
                 <img
                     src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"

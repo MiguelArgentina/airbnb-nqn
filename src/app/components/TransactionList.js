@@ -83,12 +83,12 @@ const TransactionList = () => {
         }
     };
 
-    if (loading) return <div>Loading transactions...</div>;
+    if (loading) return <div>Cargando transacciones...</div>;
     if (error) return <div>{error}</div>;
 
     return (
         <div className="bg-gray-100 p-4 rounded-lg">
-            <h2 className="text-xl text-gray-900 font-semibold mb-4">Transaction List</h2>
+            <h2 className="text-xl text-gray-900 font-semibold mb-4">Listado de Transacciones</h2>
 
             <div className="flex gap-4 mb-4">
                 <input
@@ -107,7 +107,7 @@ const TransactionList = () => {
                     onClick={handleFilter}
                     className="p-2 bg-blue-500 text-white rounded"
                 >
-                    Filter
+                    Filtrar
                 </button>
             </div>
 
@@ -117,25 +117,20 @@ const TransactionList = () => {
                     <thead className="bg-gray-200">
                     <tr>
                         <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Date</th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">USD
-                            Income
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Ingreso USD
                         </th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">ARS
-                            Income
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Ingreso ARS
                         </th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">USD
-                            Expense
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Gasto USD
                         </th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">ARS
-                            Expense
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Gasto ARS
                         </th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Exchange
-                            Rate
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">TC (ARS/USD)
                         </th>
                         <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">
-                            Description
+                            Nota
                         </th>
-                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-left font-semibold">Actions</th>
+                        <th className="border-b-2 border-gray-300 text-gray-800 px-4 py-2 text-center font-semibold">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>

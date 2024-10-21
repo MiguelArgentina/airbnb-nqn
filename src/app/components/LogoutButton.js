@@ -20,7 +20,7 @@ const LogoutButton = ({ onLogout }) => {
             onClick={handleLogout}
             className="bg-red-500 text-white rounded-full py-2 px-4 hover:bg-red-600 transition"
         >
-            Logout
+            Desconectar
         </button>
     );
 };

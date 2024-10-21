@@ -22,17 +22,17 @@ const TransactionForm = () => {
         const hasArsValue = arsIncome > 0 || arsExpense > 0;
 
         if (hasUsdValue && hasArsValue) {
-            setErrorMessage("You can only add one value in either USD or ARS.");
+            setErrorMessage("En una transacción sólo puede cargar o USD o ARS.");
             return false;
         }
 
         if (hasUsdValue && exchangeRate === 0) {
-            setErrorMessage("Exchange rate is required when a USD value is added.");
+            setErrorMessage("Debe ingresar un TC al cargar USD.");
             return false;
         }
 
         if (hasArsValue && exchangeRate !== 0) {
-            setErrorMessage("Exchange rate must be empty when an ARS value is added.");
+            setErrorMessage("El TC debe ser 0 al cargar ARS.");
             return false;
         }
 
@@ -66,7 +66,7 @@ const TransactionForm = () => {
                 exchangeRate,
             });
             console.log("Document written with ID: ", docRef.id);
-            setMessage(`Transaction added successfully! Transaction ID: ${docRef.id}`); // Include transaction ID in success message
+            setMessage(`Transacción creada! Transaction ID: ${docRef.id}`); // Include transaction ID in success message
             setMessageType("success");
 
             // Reset form
@@ -85,7 +85,7 @@ const TransactionForm = () => {
             if (error.message) {
                 console.error("Error message: ", error.message);
             }
-            setMessage("Error adding transaction. Please try again."); // Error message
+            setMessage("Error creando la transacción. Intente nuevamente."); // Error message
             setMessageType("error");
         }
     };
@@ -112,7 +112,7 @@ const TransactionForm = () => {
             onSubmit={handleSubmit}
             className="w-full max-w-md p-6 bg-white rounded-lg shadow-md mt-4"
         >
-            <h2 className="text-xl text-gray-900 font-semibold mb-4">Add Transaction</h2>
+            <h2 className="text-xl text-gray-900 font-semibold mb-4">Agregar transacción</h2>
 
             {errorMessage && (
                 <div className="p-2 mb-4 text-white rounded bg-red-500">
@@ -139,7 +139,7 @@ const TransactionForm = () => {
 
             <div className="flex flex-col gap-4">
                 <div>
-                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+                    <label htmlFor="date" className="block text-sm font-medium text-gray-700">Fecha</label>
                     <input
                         type="date"
                         id="date"
@@ -150,7 +150,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="usdIncome" className="block text-sm font-medium text-gray-700">USD Income</label>
+                    <label htmlFor="usdIncome" className="block text-sm font-medium text-gray-700">Ingreso USD</label>
                     <input
                         type="number"
                         min="0"
@@ -161,7 +161,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="arsIncome" className="block text-sm font-medium text-gray-700">ARS Income</label>
+                    <label htmlFor="arsIncome" className="block text-sm font-medium text-gray-700">Ingreso ARS</label>
                     <input
                         type="number"
                         min="0"
@@ -172,7 +172,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="usdExpense" className="block text-sm font-medium text-gray-700">USD Expense</label>
+                    <label htmlFor="usdExpense" className="block text-sm font-medium text-gray-700">Gasto USD</label>
                     <input
                         type="number"
                         min="0"
@@ -183,7 +183,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="arsExpense" className="block text-sm font-medium text-gray-700">ARS Expense</label>
+                    <label htmlFor="arsExpense" className="block text-sm font-medium text-gray-700">Gasto ARS</label>
                     <input
                         type="number"
                         min="0"
@@ -194,8 +194,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="exchangeRate" className="block text-sm font-medium text-gray-700">Exchange Rate (USD
-                        to ARS)</label>
+                    <label htmlFor="exchangeRate" className="block text-sm font-medium text-gray-700"> TC (ARS/USD) </label>
                     <input
                         type="number"
                         min="0"
@@ -207,7 +206,7 @@ const TransactionForm = () => {
                     />
                 </div>
                 <div>
-                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Descripción</label>
                     <textarea
                         id="description"
                         value={description}
@@ -219,7 +218,7 @@ const TransactionForm = () => {
                     type="submit"
                     className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
                 >
-                    Add Transaction
+                    Agregar
                 </button>
             </div>
         </form>

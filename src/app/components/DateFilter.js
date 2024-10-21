@@ -7,7 +7,7 @@ const DateFilter = ({ startDate, setStartDate, endDate, setEndDate }) => {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
             <TextField
-                label="Start Date"
+                label="Desde"
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -15,7 +15,7 @@ const DateFilter = ({ startDate, setStartDate, endDate, setEndDate }) => {
                 style={{ width: '45%' }}
             />
             <TextField
-                label="End Date"
+                label="Hasta"
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}

@@ -9,13 +9,13 @@ export default function ForbiddenPage() {
 
     return (
         <div>
-            <h1>Forbidden</h1>
-            <p>You do not have permission to view this page.</p>
+            <h1>Acceso denegado</h1>
+            <p>No tiene permisos para acceder a esta página.</p>
             <a
                 href={"/"}
                 className="mt-4 w-full bg-gray-300 text-gray-800 py-2 rounded hover:bg-gray-400 transition"
             >
-                Back to Transactions
+                Volver al listado
             </a>
         </div>
     );
