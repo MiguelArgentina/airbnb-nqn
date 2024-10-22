@@ -9,12 +9,15 @@ const IncomeSummary = () => {
     const [globalIncomeARS, setGlobalIncomeARS] = useState(0);
     const [totalIncomeUSD, setTotalIncomeUSD] = useState(0); // Track total USD income
     const [totalExpenseARS, setTotalExpenseARS] = useState(0);
+    const [arsExpenseSubtotal, setArsExpenseSubtotal] = useState(0);
+    const [usdExpenseSubtotal, setUsdExpenseSubtotal] = useState(0);
     const [subtotalUSD, setSubtotalUSD] = useState(0); // New: subtotal for USD incomes
     const [subtotalARS, setSubtotalARS] = useState(0); // New: subtotal for ARS incomes
     const [percentage, setPercentage] = useState(30); // Default percentage
     const [usdManagerRevenue, setUsdManagerRevenue] = useState(0); // USD calculated revenue
     const [arsManagerRevenue, setArsManagerRevenue] = useState(0); // ARS calculated revenue
     const [arsOwnerRevenue, setArsOwnerRevenue] = useState(0); // Final ARS revenue after subtracting percentage
+    const [arsManagerCalculatedGlobalRevenue, setArsManagerCalculatedGlobalRevenue] = useState(0); // Final ARS revenue after subtracting percentage
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [loading, setLoading] = useState(true);
@@ -41,9 +44,11 @@ const IncomeSummary = () => {
             const transactionSnapshot = await getDocs(transactionQuery);
             let globalIncomeInARS = 0;
             let totalIncomeInUSD = 0; // Track total USD income
-            let totalExpense = 0;
+            let totalExpenseArs = 0;
             let usdIncomeSubtotal = 0; // New: subtotal for USD income
             let arsIncomeSubtotal = 0; // New: subtotal for ARS income
+            let arsExpenseSubtotal = 0; // New: subtotal for ARS income
+            let usdExpenseSubtotal = 0; // New: subtotal for ARS income
 
             transactionSnapshot.docs.forEach(doc => {
                 const data = doc.data();
@@ -56,18 +61,21 @@ const IncomeSummary = () => {
                 totalIncomeInUSD += data.usdIncome || 0; // Track USD income
                 globalIncomeInARS += (data.usdIncome || 0) * exchangeRate + (data.arsIncome || 0); // Convert USD income to ARS and add ARS income
 
-                const usdExpenseInARS = (data.usdExpense || 0) * exchangeRate;
-                totalExpense += usdExpenseInARS + (data.arsExpense || 0);  // Summing up total expenses in ARS
+                usdExpenseSubtotal += data.usdExpense || 0; // New: Accumulate USD expense subtotal
+                const usdExpenseInARS = usdExpenseSubtotal * exchangeRate;
+                arsExpenseSubtotal += data.arsExpense || 0; // Accumulate ARS expense subtotal
+                totalExpenseArs += usdExpenseInARS + data.arsExpense ;  // Summing up total expenses in ARS
             });
-
             setSubtotalUSD(usdIncomeSubtotal); // Set USD subtotal
             setSubtotalARS(arsIncomeSubtotal); // Set ARS subtotal
             setGlobalIncomeARS(globalIncomeInARS);
             setTotalIncomeUSD(totalIncomeInUSD); // Set total USD income
-            setTotalExpenseARS(totalExpense);
+            setTotalExpenseARS(totalExpenseArs);
+            setArsExpenseSubtotal(arsExpenseSubtotal);
+            setUsdExpenseSubtotal(usdExpenseSubtotal);
 
             // Calculate the revenue based on percentage
-            calculateRevenues(globalIncomeInARS, totalIncomeInUSD, totalExpense, percentage, arsIncomeSubtotal);
+            calculateRevenues(globalIncomeInARS, totalIncomeInUSD, totalExpenseArs, percentage, arsExpenseSubtotal, arsIncomeSubtotal);
         } catch (error) {
             console.error("Error fetching transaction data:", error);
             setError("Failed to fetch transaction data");
@@ -76,15 +84,18 @@ const IncomeSummary = () => {
         }
     };
 
-    const calculateRevenues = (globalIncomeInARS, totalIncomeInUSD, totalExpense, percentage, arsIncomeSubtotal) => {
+    const calculateRevenues = (globalIncomeInARS, totalIncomeInUSD, totalExpense, percentage, arsExpenseSubtotal, arsIncomeSubtotal) => {
         const subTotalRevenueARS = globalIncomeInARS - totalExpense; // Total ARS revenue
-        const usdManagerCalculatedRevenue = totalIncomeInUSD * (percentage / 100); // USD calculated revenue
-        const arsManagerCalculatedRevenue = arsIncomeSubtotal * (percentage / 100); // ARS calculated revenue
-        const ownerRevenueARS = subTotalRevenueARS - (subTotalRevenueARS * (percentage / 100)); // Subtract percentage from total revenue
-
+        const usdManagerCalculatedRevenue = (totalIncomeInUSD - usdExpenseSubtotal) * (percentage / 100); // USD calculated revenue
+        const arsManagerCalculatedRevenue = (arsIncomeSubtotal - arsExpenseSubtotal) * (percentage / 100); // ARS calculated revenue
+        const arsManagerCalculatedGlobalRevenue = subTotalRevenueARS * (percentage / 100); // ARS calculated revenue
+        const ownerRevenueARS = subTotalRevenueARS * ((100 - percentage) / 100); // Subtract percentage from total revenue
         // Set the values in state
+        console.log('subtotalARS', subtotalARS);
+        console.log('arsExpenseSubtotal', arsExpenseSubtotal);
         setUsdManagerRevenue(usdManagerCalculatedRevenue);
         setArsManagerRevenue(arsManagerCalculatedRevenue);
+        setArsManagerCalculatedGlobalRevenue(arsManagerCalculatedGlobalRevenue);
         setArsOwnerRevenue(ownerRevenueARS);
     };
 
@@ -113,14 +124,16 @@ const IncomeSummary = () => {
             setUsdManagerRevenue(0);
             setArsManagerRevenue(0);
             setArsOwnerRevenue(0);
+            setArsManagerCalculatedGlobalRevenue(0);
         } else if (!isNaN(newPercentage) && newPercentage >= 0 && newPercentage <= 100) {
             setPercentage(newPercentage);
-            calculateRevenues(globalIncomeARS, totalIncomeUSD, totalExpenseARS, newPercentage);
+            calculateRevenues(globalIncomeARS, totalIncomeUSD, totalExpenseARS, newPercentage, subtotalARS);
         } else {
             setPercentage(0);
             setUsdManagerRevenue(0);
             setArsManagerRevenue(0);
             setArsOwnerRevenue(0);
+            setArsManagerCalculatedGlobalRevenue(0);
         }
     };
 
@@ -208,6 +221,10 @@ const IncomeSummary = () => {
             <div className="mt-2 text-white">
                 <span className="text-lg font-semibold">Neto Admin. ARS: </span>
                 <span className="text-lg font-normal">${formatNumber(arsManagerRevenue)}</span>
+            </div>
+            <div className="mt-2 text-white">
+                <span className="text-lg font-semibold">Neto global Admin ARS: </span>
+                <span className="text-lg font-normal">${formatNumber(arsManagerCalculatedGlobalRevenue)}</span>
             </div>
             <div className="mt-2 text-white">
                 <span className="text-lg font-semibold">Neto global prop. ARS: </span>
