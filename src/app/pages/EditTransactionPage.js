@@ -137,6 +137,7 @@ const EditTransactionPage = () => {
                     <input
                         type="number"
                         min="0"
+                        step="0.01"
                         id="usdIncome"
                         value={usdIncome}
                         onChange={(e) => setUsdIncome(Number(e.target.value))}
@@ -148,6 +149,7 @@ const EditTransactionPage = () => {
                     <input
                         type="number"
                         min="0"
+                        step="0.01"
                         id="arsIncome"
                         value={arsIncome}
                         onChange={(e) => setArsIncome(Number(e.target.value))}
@@ -159,6 +161,7 @@ const EditTransactionPage = () => {
                     <input
                         type="number"
                         min="0"
+                        step="0.01"
                         id="usdExpense"
                         value={usdExpense}
                         onChange={(e) => setUsdExpense(Number(e.target.value))}
@@ -170,6 +173,7 @@ const EditTransactionPage = () => {
                     <input
                         type="number"
                         min="0"
+                        step="0.01"
                         id="arsExpense"
                         value={arsExpense}
                         onChange={(e) => setArsExpense(Number(e.target.value))}
@@ -181,6 +185,7 @@ const EditTransactionPage = () => {
                     <input
                         type="number"
                         min="0"
+                        step="0.01"
                         id="exchangeRate"
                         value={exchangeRate}
                         onChange={(e) => setExchangeRate(Number(e.target.value))}
